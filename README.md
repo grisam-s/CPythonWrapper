@@ -5,22 +5,23 @@ The approach of this project is fairly straightforward. Given a C or C++ library
 
 That is, if I am trying to add two numbers:
 
-int add(int x, int y)
-{
-    return x+y;
-}
+    int add(int x, int y)
+    {
+        return x+y;
+    }
 
 In the dll file, I would essentially create a function that goes like:
 
-static PyObject *add(PyObject *self, PyObject *args) {
-   int a;
-   int b;
+    static PyObject *add(PyObject *self, PyObject *args) {
+        int a;
+        int b;
 
-   if (!PyArg_ParseTuple(args, "ii", &a, &b)) {
-      return NULL;
-   }
-   //int c = add(a,b);
-   return Py_BuildValue("i", a+b);
-}
+        if (!PyArg_ParseTuple(args, "ii", &a, &b)) {
+            return NULL;
+        }
+        
+        int c = add(a,b);
+        return Py_BuildValue("i", a+b);
+    }
 
 The end goal is to get the same inputs and outputs, but use the underlying C/C++ library to fill the blackbox. 
